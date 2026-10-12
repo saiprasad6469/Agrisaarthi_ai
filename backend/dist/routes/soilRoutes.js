@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const soilController_1 = require("../controllers/soilController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const uploadMiddleware_1 = require("../middleware/uploadMiddleware");
+const router = (0, express_1.Router)();
+router.post('/reports', authMiddleware_1.protectFarmer, uploadMiddleware_1.uploadSoilReport.single('reportFile'), soilController_1.uploadReport);
+router.get('/reports', authMiddleware_1.protectFarmer, soilController_1.getReports);
+router.post('/verify', authMiddleware_1.protectFarmer, soilController_1.verifySoilData);
+router.post('/analyze', soilController_1.analyzeSoil);
+exports.default = router;
